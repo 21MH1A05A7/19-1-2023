@@ -1,0 +1,45 @@
+long long mod=1e9+7;
+long long powo(long long a,long long b){
+    long long ans=1;
+    while(b){
+        if(b&1){
+              ans *= a;
+              ans %= mod;
+        }
+        a *= a;
+        a %= mod;
+        b >>= 1;
+    }
+    return ans;
+}
+
+long long inv(long long a){
+    return powo(a,mod-2);
+}
+
+int solve(vector<int> a) {
+    // int res=0;
+    long long ev=0;
+    long long od=0;
+    for(int i=0;i<a.size();i++){
+        if(a[i]%2==0){
+            ev+=1;
+        }
+        else{
+            od+=1;
+        }
+    }
+    long long evres=0;
+    if(ev!=0){
+        evres=(powo(2,ev)%mod);    
+    }
+    evres--;
+    // cout<<evres<<" ";
+    long long odres=0;
+    if(od!=0){
+        odres=(powo(2,od)%mod*inv(2)%mod)%mod;
+        odres--;
+    }
+    // cout<<odres<<" ";  
+    return (evres%mod+odres%mod+(evres%mod*odres%mod)%mod)%mod;
+}
